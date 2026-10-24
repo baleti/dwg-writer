@@ -14,3 +14,5 @@ Status: experimental.
 ## License
 
 MIT, see [LICENSE](LICENSE). AutoCAD and DWG are trademarks of Autodesk, Inc. This project is independent and is not affiliated with, endorsed by or sponsored by Autodesk.
+
+Note: `dwgtool new` needs a blank template (`templates/blank_<year>.dwg`) that is not included in this repository; supply your own.
