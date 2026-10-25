@@ -121,6 +121,7 @@ def apply(doc, h, t):
         d['height'] = d['height'] * t.s
         if not t.refl: d['rot'] = t.norm(d['rot'] + t.rot)
     elif ty == 44:
+        if d.get('tail') is not None and d.get('tail_rest') is None: raise NotImplementedError('MTEXT with R2018 column / annotation trailer')
         d['ins'] = _p3(t, d['ins']); x = t.vec(d['xdir']); n = math.hypot(x[0], x[1]) or 1.0
         d['xdir'] = (t._z(x[0] / n), t._z(x[1] / n), d['xdir'][2])
         d['text_height'] *= t.s; d['width'] *= t.s; d['ext_h'] *= t.s; d['ext_w'] *= t.s; d['rect_height'] = d.get('rect_height', 0.0) * t.s

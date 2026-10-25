@@ -838,6 +838,10 @@ def _copy_entity(self, h, t=None, block=None):
         raise NotImplementedError('copy of INSERT with attributes: use add_insert')
     nd = copy.deepcopy(d)
     nd['handle'] = 0; nd.pop('_h', None)
+    if d['type'] == 78 and d.get('assoc'):
+        # the copy must not claim boundary objects whose reactor lists do not know it (AutoCAD AUDIT stalls on that): make it non-associative
+        nd['assoc'] = 0
+        for p in nd['paths']: p['boundary'] = []; p['nboundary'] = 0
     src = self.owner_block(h)
     if block is not None:
         bh = block if isinstance(block, int) else self.block_handle(block)

@@ -408,6 +408,12 @@ def c_mtext(rw, d):
         # R2018 column / annotation block: kept verbatim from the original (new entities use the default no-column block)
         if rd:
             d['tail'] = [rw.m.bit() for _ in range(rw.main_end - rw.m.p)]
+            # the trailer repeats attachment / x direction / insertion point / width / heights: when it starts with exactly the
+            # bits regenerated from the entity, keep only the rest verbatim so edits of those fields reach the trailer too
+            pre = mtext_tail_2018(d)
+            if d['tail'][:len(pre)] == pre: d['tail_rest'] = d['tail'][len(pre):]
+        elif d.get('tail_rest') is not None:
+            rw.m.bits.extend(mtext_tail_2018(d)); rw.m.bits.extend(d['tail_rest'])
         else:
             rw.m.bits.extend(d['tail'] if d.get('tail') is not None else mtext_tail_2018(d))
 
